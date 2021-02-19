@@ -3,8 +3,10 @@
 
 #include "CMakeProject1.h"
 #include <windows.h>
+#include "tesseract/baseapi.h"
+#include "leptonica/allheaders.h"
 using namespace std;
-
+tesseract::TessBaseAPI tessEng;
 int main()
 {
 	cout << "Hello CMake." << endl;
@@ -15,5 +17,14 @@ int main()
 	f = (pointer)GetProcAddress(handle, "hello");
 	f();
 	FreeLibrary(handle);
+	tessEng.Init("tessdata","eng");
+	tessEng.SetPageSegMode(tesseract::PageSegMode::PSM_SINGLE_LINE);
+	tessEng.SetVariable("save_best_choices", "T");
+	auto pixs = pixRead("tesseract_eng.png");
+	tessEng.SetImage(pixs);
+	cout << tessEng.GetUTF8Text();
+	tessEng.Clear();
+	pixDestroy(&pixs);
+	cin.get();
 	return 0;
 }
