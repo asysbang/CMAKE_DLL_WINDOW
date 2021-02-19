@@ -13,10 +13,14 @@ add_library(MyDll SHARED "MyDll.cpp" "MyDll.h") #动态库生成
 link_directories(${PROJECT_SOURCE_DIR}/libs) #动态库引用
 include_directories(${PROJECT_SOURCE_DIR}/includes)
 
+find_package(OpenCV REQUIRED)
+#    target_link_libraries(MY_TARGET_NAME ${OpenCV_LIBS})
+
+
 #add_library(myopencv STATIC IMPORTED)
 #set_property(TARGET myopencv PROPERTY IMPORTED_LOCATION ${PROJECT_SOURCE_DIR}/libs/opencv_world411.lib)
      find_package(Tesseract CONFIG REQUIRED)
- target_link_libraries(CMakeProject1 -lMyDll libtesseract)
+ target_link_libraries(CMakeProject1 -lMyDll libtesseract ${OpenCV_LIBS})
 
  
 
